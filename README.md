@@ -1,6 +1,6 @@
-# Cal Poly AI Summer Camp: PDF Document Extraction with Claude
+# Cal Poly AI Summer Camp: PDF Document Extraction with AWS Bedrock
 
-Welcome to our AI Summer Camp! This project will teach you how to use Large Language Models (LLMs) to automatically extract and structure information from PDF documents. You'll learn how to leverage Claude's natural language understanding to parse government documents, meeting agendas, and other structured PDFs using Python and AWS Bedrock.
+Welcome to our AI Summer Camp! This project will teach you how to use Large Language Models (LLMs) to automatically extract and structure information from PDF documents.
 
 ## Contact Information
 
@@ -13,21 +13,24 @@ Feel free to reach out if you have questions about:
 - Ideas for extending this project
 - General questions about AI and document processing
 
+## Video Tutorial
+
+For a complete walkthrough of this project, check out my video explanation:
+[AI Summer Camp Tutorial - Query Classification with AWS Bedrock](https://drive.google.com/file/d/1L0xaXiEZtAuLccpL0L2K7PkZeh4dQp3m/view?usp=sharing)
+
 ## What You'll Learn
 
 - **PDF Text Extraction**: Automatically extracting text content from PDF documents
 - **AI-Powered Document Structure**: Using LLMs to identify and organize key information
 - **AWS Bedrock**: Leveraging cloud-based AI services for document processing
-- **JSON Output**: Converting unstructured text into structured, machine-readable data
 
 ## What This Code Does
 
 This project demonstrates how to use AI to automatically extract and structure information from PDF documents. The code:
 
 1. **Extracts PDF Text**: Uses pdfplumber to pull text content from PDF files
-2. **Structures Information**: Employs Claude to identify and organize key document elements
+2. **Structures Information**: Uses LLMs to identify and organize key document elements
 3. **Outputs JSON**: Saves structured data in a clean, machine-readable format
-4. **Handles Government Documents**: Specifically designed for Board of Supervisors meeting agendas
 
 ## Prerequisites
 
@@ -56,11 +59,9 @@ pip install boto3 pdfplumber
 
 ### Key Components
 
-**pdfplumber**: A Python library specifically designed for extracting text from PDF documents. It handles complex layouts and formatting better than many alternatives.
+**pdfplumber**: A Python library specifically designed for extracting text from PDF documents.
 
 **boto3**: Amazon's Python library that lets us connect to AWS services. Think of it as a bridge between your Python code and Amazon's AI models.
-
-**Document Structure**: The process of taking unstructured text and organizing it into meaningful categories and fields.
 
 **JSON Output**: JavaScript Object Notation - a standard format for storing and exchanging structured data.
 
@@ -74,10 +75,10 @@ This function handles PDF text extraction:
 - Returns the combined text content as a single string
 
 #### Function 2: `structure_text_with_llm(text: str)`
-This function uses Claude to structure the extracted text:
+This function uses Bedrock to structure the extracted text:
 - Takes raw text as input
 - Constructs a detailed prompt asking for specific information extraction
-- Sends the prompt to Claude via AWS Bedrock
+- Sends the prompt to LLM via AWS Bedrock
 - Returns structured JSON data with meeting details and agenda items
 
 #### Function 3: `main()`
@@ -85,7 +86,6 @@ This is the main function that orchestrates the entire process:
 - Defines input and output file paths
 - Calls the extraction and structuring functions
 - Saves the final JSON output to a file
-- Handles errors gracefully
 
 ## How to Run the Code
 
@@ -115,43 +115,15 @@ Modify the file path in the `main()` function:
 pdf_file_path = "your-document.pdf"
 ```
 
-### Extract Different Information
-Modify the prompt in `structure_text_with_llm()` to extract different fields:
-```python
-prompt = f"""
-Please analyze the following document text and extract key information into a structured JSON format.
-
-Return an object with the following fields:
-
-- document_title
-- author
-- date_created
-- key_topics (list of main topics discussed)
-- action_items (list of tasks or decisions)
-
-Document text:
-{text}
-"""
-```
-
-### Change Output Format
-Modify the JSON structure to match your needs:
-```python
-# Add custom fields to the extraction prompt
-- budget_items: a list of financial items with amounts
-- deadlines: a list of important dates and deadlines
-- contact_information: relevant phone numbers and emails
-```
-
 ## Understanding the Output
 
 ### JSON Structure
 The code produces a JSON file with the following structure:
 ```json
 {
-  "meeting_title": "Board of Supervisors Regular Meeting",
-  "date": "March 15, 2024",
-  "location": "County Government Center",
+  "meeting_title": "BOARD OF SUPERVISORS AGENDA",
+  "date": "January 1, 1970",
+  "location": "SLO County Government Center",
   "supervisors": [
     {"name": "John Smith", "district": "District 1"},
     {"name": "Jane Doe", "district": "District 2"}
@@ -164,9 +136,9 @@ The code produces a JSON file with the following structure:
   ],
   "social_services_items": [
     {
-      "item_number": "SS-1",
+      "item_number": "1",
       "title": "Homeless Services Contract Approval",
-      "districts": ["District 3", "District 4"],
+      "district": "District Three",
       "type": "Consent"
     }
   ]
@@ -213,12 +185,6 @@ The AI model didn't return valid JSON:
 - Simplify your extraction prompt
 - Verify your document has the expected structure
 
-### "Empty or corrupted PDF"
-The PDF couldn't be read properly:
-- Try a different PDF file
-- Check if the PDF is password-protected
-- Verify the PDF isn't corrupted
-
 ## Important Notes
 
 - **Cost Awareness**: Each document processing request costs money (usually a few cents per document)
@@ -244,30 +210,12 @@ If you run into issues:
 4. Test with a simpler PDF first
 5. Check your AWS credentials and permissions
 
-## Example Results
-
-After running the code on a Board of Supervisors agenda, you might extract:
-- Meeting details (date, location, attendees)
-- 15+ agenda sections automatically identified
-- 5+ social services items with full details
-- Structured data ready for further analysis or database storage
-
-## Extending This Project
-
-Ideas for taking this project further:
-- **Multiple PDFs**: Process entire directories of PDF files
-- **Database Integration**: Store extracted data in a database
-- **Web Interface**: Create a web app for uploading and processing PDFs
-- **Email Alerts**: Set up notifications for specific types of agenda items
-- **Trend Analysis**: Track topics over time across multiple meetings
 
 ## Resources for Further Learning
 
 - [pdfplumber Documentation](https://github.com/jsvine/pdfplumber)
 - [AWS Bedrock Documentation](https://docs.aws.amazon.com/bedrock/)
 - [JSON Processing in Python](https://docs.python.org/3/library/json.html)
-- [PDF Processing Best Practices](https://pymupdf.readthedocs.io/en/latest/)
-- [Document AI Overview](https://cloud.google.com/document-ai)
 
 ---
 
