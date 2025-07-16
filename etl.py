@@ -2,7 +2,7 @@ import boto3
 import json
 import pdfplumber
 
-def extract_text_from_pdf(pdf_file_path):
+def extract_text_from_pdf(pdf_file_path: str):
   """Extract text from PDF using pdfplumber"""
   print(f"Extracting text from {pdf_file_path}...")
   
@@ -14,7 +14,7 @@ def extract_text_from_pdf(pdf_file_path):
         extracted_text += text + "\n"
   return extracted_text
 
-def structure_text_with_llm(text):
+def structure_text_with_llm(text: str):
   """Use AWS Bedrock to structure text into JSON"""
   
   client = boto3.client('bedrock-runtime', region_name='us-west-2')
@@ -72,7 +72,7 @@ def structure_text_with_llm(text):
   except json.JSONDecodeError:
     return {"raw_llm_response": llm_output}
 
-def main():
+def main() -> None:
   pdf_file_path = "Board-of-Supervisors-Agenda.pdf"
   output_filename = "extracted_document.json"
   
