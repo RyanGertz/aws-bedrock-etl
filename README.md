@@ -145,14 +145,6 @@ The code produces a JSON file with the following structure:
 }
 ```
 
-### Field Explanations
-**meeting_title**: The official title of the meeting or document
-**date**: When the meeting occurred or document was created
-**location**: Where the meeting took place
-**supervisors**: List of board members with their districts
-**all_section_titles**: All major sections found in the agenda
-**social_services_items**: Detailed items specifically related to social services topics
-
 ## Common Issues and Solutions
 
 ### "No module named 'pdfplumber'"
